@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: promocode-issue
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/simpledb
+    username: postgres
+    password: admin
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase/changelog-master.xml
+    default-schema: public
+  h2:
+    console:
+      enabled: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.jdbc.core.JdbcTemplate: DEBUG
+    org.springframework.jdbc.core.StatementCreatorUtils: DEBUG
