@@ -5,11 +5,12 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <groupId>com.voshodnerd</groupId>
-    <artifactId>monoRepoPromoCodeJava17</artifactId>
+    <artifactId>monoRepoPromoCodeJava21</artifactId>
     <name>mono-repository</name>
     <description>Demo project for MonoRepoPromoCode</description>
     <modules>
         <module>promocode-issue</module>
         <module>promocode-issue-kotlin</module>
+        <module>promocode-helidon</module>
     </modules>
 </project>
