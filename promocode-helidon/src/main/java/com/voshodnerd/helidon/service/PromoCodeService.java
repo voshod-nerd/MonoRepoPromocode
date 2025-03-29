@@ -35,10 +35,19 @@ public class PromoCodeService {
         this.promoCodeRepository = promoCodeRepository;
     }
 
-
     @Transactional
-    public Optional<PromoCode> issuePromoCode() {
-        return promoCodeRepository.findFirstByStatus(PromoCode.PromoCodeStatus.ACTIVE);
+    public Optional<PromoCode> issuePromoCode(String phoneNumber) {
+        var existingPromoCode = promoCodeRepository.findFirstByIssuedBy(phoneNumber);
+        if (existingPromoCode.isEmpty()) {
+            var promoCode = promoCodeRepository.findFirstByStatus(PromoCode.PromoCodeStatus.ACTIVE);
+            if (promoCode.isEmpty()) return Optional.empty();
+            var promoCodeEntity = promoCode.get();
+            promoCodeEntity.setStatus(PromoCode.PromoCodeStatus.USED);
+            promoCodeEntity.setIssuedBy(phoneNumber);
+            promoCodeRepository.save(promoCodeEntity);
+            return promoCode;
+        }
+        return existingPromoCode;
     }
 
     @Transactional
@@ -63,11 +72,11 @@ public class PromoCodeService {
     }
 
 
-    public boolean uploadPromoCodeFile(MultiPart file, Long campaignId) throws NoCampaignException {
+    public boolean uploadPromoCodeFile(InputStream stream, Long campaignId) throws NoCampaignException {
         // Parse the CSV file
         var uploadList = new ArrayList<String>();
         try {
-            uploadList = (ArrayList<String>) CsvReader.parseCsv(convertMultiPartToInputStream(file));
+            uploadList = (ArrayList<String>) CsvReader.parseCsv(stream);
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Failed to parse CSV file ");
         }

@@ -12,5 +12,7 @@
         <module>promocode-issue</module>
         <module>promocode-issue-kotlin</module>
         <module>promocode-helidon</module>
+        <module>promocode-creator</module>
+        <module>promocode-quarkus</module>
     </modules>
 </project>

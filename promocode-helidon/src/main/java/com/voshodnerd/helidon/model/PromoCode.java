@@ -1,5 +1,6 @@
 package com.voshodnerd.helidon.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -14,6 +15,7 @@ import jakarta.persistence.Table;
 @Table(name = "promo_code")
 public class PromoCode {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String value;
@@ -22,6 +24,17 @@ public class PromoCode {
     @ManyToOne
     @JoinColumn(name = "campaign_id")
     private Campaign campaign;
+    @Column(name = "issued_by")
+    private String issuedBy;
+
+    public String getIssuedBy() {
+        return issuedBy;
+    }
+
+    public void setIssuedBy(String issuedBy) {
+        this.issuedBy = issuedBy;
+    }
+
 
     public String getValue() {
         return value;

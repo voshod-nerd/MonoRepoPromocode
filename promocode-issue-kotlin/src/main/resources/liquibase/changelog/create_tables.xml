@@ -9,7 +9,7 @@
     <changeSet id="1" author="voshod_nerd@hotmail.com">
         <createTable tableName="campaign">
             <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>

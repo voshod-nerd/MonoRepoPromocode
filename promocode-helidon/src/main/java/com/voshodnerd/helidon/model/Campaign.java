@@ -15,6 +15,7 @@ import java.time.ZonedDateTime;
 public class Campaign {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;

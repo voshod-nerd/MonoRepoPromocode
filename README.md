@@ -36,3 +36,9 @@
 ## Лицензия
 
 Проект распространяется под лицензией MIT. Подробности см. в файле LICENSE.
+
+
+## Сборка
+для сборки Quarkus
+
+mvn package -pl :promocode-quarkus  -Dquarkus.package.jar.type=uber-jar -am -DskipTests
