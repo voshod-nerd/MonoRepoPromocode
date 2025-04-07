@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  my-app:
+    build:
+      context: .  # Path to the directory containing Dockerfile
+      dockerfile: \src\main\docker\Dockerfile.jvm  # Name of the Dockerfile (optional if it's the default name)
+    container_name: myapp-container  # Optional custom container name
+    ports:
+      - "8080:8080"  # Example port mapping (host:container)
+    # Add other service configurations as needed
+    environment:
+       DB_HOST_URL: "jdbc:postgresql://postgres-container:5432/mydatabase?currentSchema=public"  # Uses the service name as hostname
+       POSTGRES_USER: "postgres"
+       POSTGRES_PASSWORD: "postgres"
+    depends_on:
+      - postgres  # Ensures Postgres starts first
+    networks:
+        - app-network
+  postgres:
+    image: postgres:15  # Or latest/alpine
+    container_name: postgres-container
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mydatabase
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  # Persist data
+    ports:
+        - "5432:5432"  # Expose Postgres port (optional for host access)
+    networks:
+        - app-network
+# Define networks and volumes
+networks:
+  app-network:
+    driver: bridge  # Default (optional)
+
+volumes:
+  postgres-data:  # Named volume for DB persistence
